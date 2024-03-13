@@ -28,19 +28,6 @@ public class LoginController {
 	
 	@Autowired
 	UserServices userServices;
-	/*
-	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody UserLogin userLogin) {
-		log.info("Entering method login");
-		if(userServices.comprobateLogin(userLogin.getEmail(), userLogin.getPassword())) {
-			User user = userServices.getUserByEmail(userLogin.getEmail());
-			System.out.println("user" + user);
-			return ResponseEntity.ok(user);			
-		}else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseHttp(ResponseHttp.STATUS_ERROR, WRONG_DATA));
-		}
-		
-	}*/
 	
 	@PostMapping("/getUserData")
 	public ResponseEntity<?> getUserData(@RequestBody UserLogin userLogin) {

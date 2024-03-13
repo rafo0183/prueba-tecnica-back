@@ -10,10 +10,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 	
-	@Query("SELECT u FROM User u WHERE u.email = :email AND u.password = :password")
+	@Query("SELECT u FROM User u WHERE u.email = :email AND u.password = :password AND u.isDeleted = false")
 	Optional<User> getUserWithEmailPassword(@Param("email") String email,@Param("password") String password);
 
-	@Query("SELECT u FROM User u WHERE u.email = :email")
+	@Query("SELECT u FROM User u WHERE u.email = :email AND u.isDeleted = false")
 	Optional<User> getUserByEmail(String email);
 
 	@Query("SELECT u FROM User u")

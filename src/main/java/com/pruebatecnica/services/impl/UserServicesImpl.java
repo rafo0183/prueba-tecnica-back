@@ -2,6 +2,7 @@ package com.pruebatecnica.services.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.pruebatecnica.dao.CheckingAccountDAO;
 import com.pruebatecnica.dao.UserDAO;
+import com.pruebatecnica.model.request.UserToEdit;
 import com.pruebatecnica.repository.CheckingAccount;
 import com.pruebatecnica.repository.User;
 import com.pruebatecnica.services.UserServices;
@@ -53,6 +55,7 @@ public class UserServicesImpl implements UserServices{
 				user.setRole(User.ROLE_CLIENT);
 				user.setCreatedAt(new Date());
 				user.setUpdatedAt(new Date());
+				user.setIsDeleted(false);
 				
 				user = userDao.insert(user);
 				
@@ -63,6 +66,7 @@ public class UserServicesImpl implements UserServices{
 				checkingAccount.setRewardPoints(50000L);
 				checkingAccount.setCreatedAt(new Date());
 				checkingAccount.setUpdatedAt(new Date());
+				checkingAccount.setAccountNumber(generateAccountNumber());
 				
 				checkingAccount = checkingAccountDAO.insert(checkingAccount);
 							
@@ -80,9 +84,41 @@ public class UserServicesImpl implements UserServices{
 	}
 
 
+	private Long generateAccountNumber() {
+		return (long)(Math.random() * (100000 - 10000)) + 10000;
+	}
+
+
 	@Override
 	public List<User> getUserList() {
 		return userDao.getUserList();
+	}
+
+
+	@Override
+	public boolean updateUser(UserToEdit userToEdit) {
+		User user = userDao.get(userToEdit.getId());
+		if(!userToEdit.getIsDeleted()) {
+			user.setName(userToEdit.getName());
+			user.setLastname(userToEdit.getLastname());
+			user.setEmail(userToEdit.getEmail());
+			user.setPassword(userToEdit.getPassword());
+			user.setRole(userToEdit.getRole());
+			user.setUpdatedAt(new Date());
+			user.setIsDeleted(Boolean.FALSE);
+		}else {
+			user.setIsDeleted(Boolean.TRUE);
+		}
+		
+		try {
+			userDao.insert(user);
+			return true;			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		
 	}
 
 }

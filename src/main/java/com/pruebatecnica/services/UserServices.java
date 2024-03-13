@@ -2,6 +2,7 @@ package com.pruebatecnica.services;
 
 import java.util.List;
 
+import com.pruebatecnica.model.request.UserToEdit;
 import com.pruebatecnica.repository.User;
 
 public interface UserServices {
@@ -12,5 +13,7 @@ public interface UserServices {
 	boolean createUserAndCheckingAccount(String name, String lastName, String email, String password);
 
 	List<User> getUserList();
+
+	boolean updateUser(UserToEdit userToEdit);
 	
 }
