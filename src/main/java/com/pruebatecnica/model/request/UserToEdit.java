@@ -1,4 +1,4 @@
-package com.pruebatecnica.repository;
+package com.pruebatecnica.model.request;
 
 import java.util.Date;
 import java.util.Objects;
@@ -10,32 +10,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "users")
-public class User {
-	//Roles
-	public final static String ROLE_ADMIN = "ADMIN";
-	public final static String ROLE_CLIENT = "CLIENT";
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
+public class UserToEdit {
 	private Long id;
-	@Column(name = "email")
 	private String email;
-	@Column(name = "password")
 	private String password;
-	@Column(name = "name")
 	private String name;
-	@Column(name = "lastname")
 	private String lastname;
-	@Column(name = "is_deleted")
 	private Boolean isDeleted;
-	@Column(name = "created_at")
 	private Date createdAt;
-	@Column(name = "updated_at")
 	private Date updatedAt;
-	@Column(name = "role")
 	private String role;
 	
 	public Long getId() {
